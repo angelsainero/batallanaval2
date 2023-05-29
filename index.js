@@ -1,107 +1,94 @@
 let aTurn = true;
 
 const boats = [
-    { name: "aircraftCarrier", quantity: 1, size: 5, icon: "⛴️" },
-    { name: "vessel", quantity: 1, size: 4, icon: "🚢" },
-    { name: "submarine", quantity: 2, size: 3, icon: "⚓" },
-    { name: "cruise", quantity: 3, size: 2, icon: "🚤" },
-    { name: "boat", quantity: 3, size: 1, icon: "🛶" },
-  ];
+  { name: "aircraftCarrier", quantity: 1, size: 5, icon: "⛴️" },
+  { name: "vessel", quantity: 1, size: 4, icon: "🚢" },
+  { name: "submarine", quantity: 2, size: 3, icon: "⚓" },
+  { name: "cruise", quantity: 3, size: 2, icon: "🚤" },
+  { name: "boat", quantity: 3, size: 1, icon: "🛶" },
+];
+
+let boardA = [
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+];
+
+let boardB = [
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+];
+
+let boardAHide = [
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+];
+
+let boardBHide = [
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+];
 
 
-  let boardA = [
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  ];
+let shootCounterA = 0;
+let shootCounterB = 0;
+let win = false;
 
-  let boardB = [
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  ];
+let PlayerAHits = 0;
+let PlayerBHits = 0;
 
-  let boardAHide = [
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  ];
+let playerAShots = [];
+let playerBShots = [];
 
-  let boardBHide = [
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  ];
-
-  function printHeading(text) {
-    const pad = "=".repeat(text.length);
-    console.log(`==========${pad}==========`);
-    console.log(`========= ${text} =========`);
-    console.log(`==========${pad}==========`);
-  }
-
-
-  function printBoard(board) {
-        console.table(board);
-  }
-
-
-  //PINTAMOS TITULO
-printHeading("The Battleship simulator starts");
-
-// Situar barcos en tablero propio y tablero enemigo aleatoriamente
-placeBoats(boardA);
-placeBoats(boardB);
-
-// Pintamos tableros
-console.log("Own Board");
-printBoard(boardA);
-
-// Pintamos tableros
-console.log("Enemy Board");
-printBoard(boardB);
-
-
-function getRandom(max) {
-  return Math.floor(Math.random() * max);
+function printHeading(text) {
+  const pad = "=".repeat(text.length);
+  console.log(`==========${pad}==========`);
+  console.log(`========= ${text} =========`);
+  console.log(`==========${pad}==========`);
 }
 
+function printBoard(board) {
+  console.table(board);
+}
 
-  // Comprueba que no se salgan del tablero
-  function canInsertShip(board, size, row, col, direction) {
-    if (direction === 0) {
-      // Si es Horizontal
-      if (row + size > board.length) {
-        return false;
-      }
+// Comprueba que no se salgan del tablero
+function canInsertShip(board, size, row, col, direction) {
+  if (direction === 0) {
+    // Si es Horizontal
+    if (row + size > board.length) {
+      return false;
+    }
     for (var i = row; i < row + size; i++) {
       if (board[i][col] !== " ") {
         return false;
@@ -120,6 +107,7 @@ function getRandom(max) {
   }
   return true;
 }
+
 // inserta barcos
 function placeBoats(board) {
   boats.forEach((boat) => {
@@ -134,7 +122,6 @@ function placeBoats(board) {
         direction = Math.floor(Math.random() * 2);
       }
 
-
       for (let j = 0; j < boat.size; j++) {
         if (direction === 0) {
           board[row + j][col] = boat.icon;
@@ -146,6 +133,54 @@ function placeBoats(board) {
   });
 }
 
+//PINTAMOS TITULO
+printHeading("The Battleship simulator starts");
+
+// Situar barcos en tablero propio y tablero enemigo aleatoriamente
+
+function getRandom(max) {
+  return Math.floor(Math.random() * max);
+}
+
+placeBoats(boardA);
+placeBoats(boardB);
+
+// Pintamos tableros
+console.log("Own Board");
+printBoard(boardA);
+
+// Pintamos tableros
+console.log("Enemy Board");
+printBoard(boardB);
+
+
+//funcion comprobar ganador
+function getWinner(board, boardHide) {
+  if (aTurn) {
+    PlayerAHits = PlayerAHits + 1;
+    if (PlayerAHits === 24) {
+      win = true;
+      printHeading("PLAYER A: Wins! por HITS");
+      // printBoard(board);
+      // printBoard(boardHide);
+    } else {
+      aTurn
+    }
+  }
+
+  if (!aTurn) {
+    PlayerBHits = PlayerBHits + 1;
+    if (PlayerBHits === 24) {
+      win = true;
+      printHeading("PLAYER B: Wins! por HITS");
+      // printBoard(board);
+      // printBoard(boardHide);
+    } else {
+      aTurn
+    }
+  }
+}
+
 //funcion cambiar turno
 function changeTurn() {
   if (aTurn === false) {
@@ -154,13 +189,6 @@ function changeTurn() {
     aTurn = false;
   }
 }
-
-let shootCounterA = 0;
-let shootCounterB = 0;
-let win = false;
-
-let PlayerAHits = 0;
-let PlayerBHits = 0;
 
 // funcion disparar
 function shoot(x, y) {
@@ -182,52 +210,47 @@ function shoot(x, y) {
 
   if (aTurn) {
     //turno de A
-    showOwnBoard = boardA
-    board = boardB //dispará en boardB
-    boardHide = boardBHide //Pintará en boardA
-    shootCounterA = shootCounterA + 1
+    showOwnBoard = boardA;
+    board = boardA; //dispará en boardB
+    boardHide = boardBHide; //Pintará en boardA
+    shootCounterA = shootCounterA + 1;
   } else {
     //turno de B
-    showOwnBoard = boardB
-    board = boardB
-    boardHide = boardAHide
-    shootCounterB = shootCounterB +1
-
+    showOwnBoard = boardB;
+    board = boardB;
+    boardHide = boardAHide;
+    shootCounterB = shootCounterB + 1;
   }
-    //quien llega al contado para finalizar el juego
+  //quien llega al contador para finalizar el juego
   if ((aTurn && shootCounterA > 99) || (!aTurn && shootCounterB > 99)) {
-    printHeading("GAME OVER")
+    printHeading("GAME OVER");
+    win=true
     if (PlayerAHits > PlayerBHits) {
-      printHeading("PLAYER A WINS")
+      printHeading("PLAYER A WINS");
     } else {
-      printHeading("PLAYER B WINS")
+      printHeading("PLAYER B WINS");
     }
     printBoard(showOwnBoard);
     printBoard(boardHide);
   } else {
     if (board[x][y] == " ") {
-      boardHide[x][y] ="💧";
+      boardHide[x][y] = "💧";
       changeTurn();
     } else {
-      boardHide[x][y] = "🔥"
+      boardHide[x][y] = "🔥";
+      getWinner(board, boardHide);
     }
     printBoard(showOwnBoard);
     printBoard(boardHide);
   }
-  
-    
-
 }
- 
 
-
-//  while (win == false) {
-
+while (win == false) {
   shoot(getRandom(10), getRandom(10));
-  shoot(getRandom(10), getRandom(10));
-  shoot(getRandom(10), getRandom(10));
-  shoot(getRandom(10), getRandom(10));
-  shoot(getRandom(10), getRandom(10));
+}
 
-
-
+// shoot(getRandom(10), getRandom(10));
+// shoot(getRandom(10), getRandom(10));
+// shoot(getRandom(10), getRandom(10));
+// shoot(getRandom(10), getRandom(10));
+// shoot(getRandom(10), getRandom(10));
