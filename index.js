@@ -60,7 +60,6 @@ let boardBHide = [
   [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
 ];
 
-
 let shootCounterA = 0;
 let shootCounterB = 0;
 let win = false;
@@ -153,18 +152,17 @@ printBoard(boardA);
 console.log("Enemy Board");
 printBoard(boardB);
 
-
 //funcion comprobar ganador
 function getWinner(board, boardHide) {
   if (aTurn) {
     PlayerAHits = PlayerAHits + 1;
     if (PlayerAHits === 24) {
       win = true;
-      printHeading("PLAYER A: Wins! por HITS");
+      printHeading("PLAYER A: Wins! all boats of Player B destroyed");
       // printBoard(board);
       // printBoard(boardHide);
     } else {
-      aTurn
+      aTurn;
     }
   }
 
@@ -172,11 +170,11 @@ function getWinner(board, boardHide) {
     PlayerBHits = PlayerBHits + 1;
     if (PlayerBHits === 24) {
       win = true;
-      printHeading("PLAYER B: Wins! por HITS");
+      printHeading("PLAYER B: Wins! all boats of Player A  destroyed");
       // printBoard(board);
       // printBoard(boardHide);
     } else {
-      aTurn
+      aTurn;
     }
   }
 }
@@ -192,15 +190,29 @@ function changeTurn() {
 
 // funcion disparar
 function shoot(x, y) {
+  let shotCoordinates = `${x},${y}`;
+
+  while (
+    (aTurn && playerAShots.includes(shotCoordinates)) ||
+    (!aTurn && playerBShots.includes(shotCoordinates))
+  ) {
+    // Solicitar nuevas coordenadas si ya ha disparado a esas 
+    x = getRandom(10);
+    y = getRandom(10);
+    shotCoordinates = `${x},${y}`;
+  }
+
   let board; // board al que se disparará
   let boardHide; // board donde se pintará el disparo
   if (aTurn) {
+    playerAShots.push(shotCoordinates);
     printHeading(
       `SHOOOOOOOT PLAYER A to ${x},${y}:--> turn ${
         shootCounterA + shootCounterB
       }`
     );
   } else {
+    playerBShots.push(shotCoordinates);
     printHeading(
       `SHOOOOOOOT PLAYER B to ${x},${y}:--> turn ${
         shootCounterA + shootCounterB
@@ -223,8 +235,8 @@ function shoot(x, y) {
   }
   //quien llega al contador para finalizar el juego
   if ((aTurn && shootCounterA > 99) || (!aTurn && shootCounterB > 99)) {
-    printHeading("GAME OVER");
-    win=true
+    printHeading("GAME OVER 100 shots fired ");
+    win = true;
     if (PlayerAHits > PlayerBHits) {
       printHeading("PLAYER A WINS");
     } else {
@@ -238,6 +250,7 @@ function shoot(x, y) {
       changeTurn();
     } else {
       boardHide[x][y] = "🔥";
+      printHeading("TOCADO")
       getWinner(board, boardHide);
     }
     printBoard(showOwnBoard);
@@ -247,6 +260,7 @@ function shoot(x, y) {
 
 while (win == false) {
   shoot(getRandom(10), getRandom(10));
+  
 }
 
 // shoot(getRandom(10), getRandom(10));
