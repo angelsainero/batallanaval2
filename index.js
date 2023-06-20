@@ -238,7 +238,7 @@ function shoot(x, y) {
     shootCounterB = shootCounterB + 1;
   }
   //quien llega al contador para finalizar el juego
-  if ((aTurn && shootCounterA > 99) || (!aTurn && shootCounterB > 99)) {
+  if ((aTurn && shootCounterA > 20) || (!aTurn && shootCounterB > 20)) {
     win = true;
     printHeading("GAME OVER 100 shots fired ");
     if (PlayerAHits > PlayerBHits) {
